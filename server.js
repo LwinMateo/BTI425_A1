@@ -38,8 +38,8 @@ app.post("/api/movies", (req, res) => {
 app.get("/api/movies", (req, res) => {
     
     db.getAllMovies(req.query.page, req.query.perPage)
-    .then(movies => res.json(movies))
-    .catch(err => res.json(err));
+    .then((movies) => res.json(movies))
+    .catch((err) => res.json(err));
     
 });
 
