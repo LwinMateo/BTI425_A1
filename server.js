@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-    res.json({ message : "API Listening" });
+    res.sendFile(path.join(__dirname, "/index.html"));
 });
 
 //Add new
