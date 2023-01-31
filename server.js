@@ -20,11 +20,10 @@ const MoviesDB = require("./modules/moviesDB.js");
 
 const db = new MoviesDB();
 
+const app = express();
 app.use(express.json());
 app.use(cors());
 require('dotenv').config(); 
-
-const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
 
