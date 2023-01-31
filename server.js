@@ -42,44 +42,47 @@ app.post("/api/movies", (req, res) => {
 app.get("/api/movies", (req, res) => {
     
     db.getAllMovies(req.query.page, req.query.perPage, req.query.title)
-    .then((movies) => res.json(movies))
-    .catch((err) => res.json(err));
+    .then((movies) => {res.status(200).json(movies)})
+    .catch((err) => {res.status(500).json({ error: err })});
     
 });
 
-app.get("/api/movies/:id", (req, res) => {
+app.get("/api/movies/:_id", (req, res) => {
     
-    db.getMovieById(req.params.id)
-    .then((movies)=>{
-        movies ? res.json(movies) : res.status(404).json({"message": "movie id not found"});
+    db.getMovieById(req.params._id)
+    .then((movie)=>{
+        res.status(200).json(movie)
     })
     .catch((err)=>{
-        res.status(500).json({ "message" : "Server Error for getting movie by id" });
+        res.status(500).json({ error: err })
     });
     
 });
 
-app.put("/api/movies/:id", (req, res) => {
+app.put("/api/movies/:_id", (req, res) => {
 
 
-    db.updateMovieById(req.body, req.params.id)
-    .then((movies) => {
-        movies ? res.json(movies) : res.status(404).json({"message" : "movies not updated"});
+    db.updateMovieById(req.body, req.params._id)
+    .then(() => {
+        res.status(200).json({ message : 'Success update for _id'});
     })
     .catch((err) => {
-        res.status(500).json({ "message" : "Server Error on Update" });
-        console.log(err);
+        res.status(500).json({ error: err })
     });
 
 });
 
-app.delete("/api/movies/:id", (req, res) => {
-    db.deleteMovieById(req.params.id)
-    .then((movies) => {
-        movies ? res.status(204).end() : res.status(404).json({"message" : "NOT ABLE TO DELETE!!"});
+app.delete("/api/movies/:_id", (req, res) => {
+    db.deleteMovieById(req.params._id)
+    .then(() => {
+        res.status(204)
     }).catch(() => {
         res.status(500).json({"message" : "Server Error on Delete"});
     });
+});
+
+app.use((req, res) => {
+    res.status(404).send("Resource not found");
 });
 
 
