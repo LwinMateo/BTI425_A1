@@ -14,19 +14,21 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const dotenv = require('dotenv').config(); 
+
 const MoviesDB = require("./modules/moviesDB.js");
 
 
 const db = new MoviesDB();
 
+app.use(express.json());
+app.use(cors());
+require('dotenv').config(); 
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
 
-app.use(express.json());
-app.use(cors());
+
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/index.html"));
