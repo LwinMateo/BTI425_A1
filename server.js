@@ -21,6 +21,7 @@ const MoviesDB = require("./modules/moviesDB.js");
 const db = new MoviesDB();
 
 var app = express();
+
 app.use(express.json());
 app.use(cors());
 require('dotenv').config(); 
